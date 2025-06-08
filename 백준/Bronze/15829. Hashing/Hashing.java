@@ -3,33 +3,36 @@ import java.util.*;
 
 public class Main {
 
-    static int L, R = 31, M = 1234567891;
+    static final int R = 31;
+    static final int M = 1234567891;
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        L = Integer.parseInt(st.nextToken());
+        int L = Integer.parseInt(br.readLine());
+        char[] chars = br.readLine().toCharArray();
 
-        st = new StringTokenizer(br.readLine());
-        char[] chars = st.nextToken().toCharArray();
-        int sum = 0;
+        long sum = 0;
 
         for(int i = 0; i < L; i++){
-            char c = chars[i];
-            int a = c - 96;
-            sum += hash(a, i);
+            int a = chars[i] - 'a' + 1;
+            sum = (sum + hash(a, i)) % M;
         }
-        bw.write(sum+"");
+
+        bw.write(Long.toString(sum));
         bw.flush();
         bw.close();
         br.close();
     }
-    static int hash(int a, int num){
-        int result = a;
+
+    static long hash(int a, int num){
+        long result = a;
+        long pow = 1;
         for(int i = 0; i < num; i++){
-            result *= R;
+            pow = (pow * R) % M;
         }
+        result = (result * pow) % M;
         return result;
     }
 }
