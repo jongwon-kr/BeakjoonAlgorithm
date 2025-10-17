@@ -11,9 +11,9 @@ class Solution {
     public int solution(int[] money) {
         int answer = 0;
         
-        dp[0][0] = 0;
+        dp[0][0] = money[0];
         dp[1][0] = 0;
-        dp[0][1] = 0;
+        dp[0][1] = Math.max(money[1], money[0]);
         dp[1][1] = money[1];
         
         for(int i = 2; i < money.length; i++){
@@ -22,6 +22,6 @@ class Solution {
         }
         
         
-        return Math.max(money[0] + dp[0][money.length - 2], dp[1][money.length - 1]);
+        return Math.max(dp[0][money.length - 2], dp[1][money.length - 1]);
     }
 }
