@@ -7,7 +7,7 @@ class Solution {
         Arrays.sort(pb);
         
         for(int i = 0; i < pb.length - 1; i++){
-            if(pb[i+1].startsWith(pb[i])){
+            if(pb[i+1].indexOf(pb[i]) == 0){
                 answer = false;
             }
         }
