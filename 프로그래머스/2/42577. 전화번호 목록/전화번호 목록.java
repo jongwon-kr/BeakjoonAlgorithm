@@ -4,7 +4,6 @@ import java.io.*;
 class Solution {
     public boolean solution(String[] pb) {
         boolean answer = true;
-        
         Arrays.sort(pb);
         
         for(int i = 0; i < pb.length - 1; i++){
@@ -12,7 +11,6 @@ class Solution {
                 answer = false;
             }
         }
-        
         
         return answer;
     }
