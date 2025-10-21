@@ -2,7 +2,6 @@ import java.util.*;
 
 class Solution {
     
-    
     public int solution(int n, int[][] wires) {
         int min = Integer.MAX_VALUE;
         HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
@@ -16,7 +15,6 @@ class Solution {
         for(int[] w : wires) {
             int a = w[0], b = w[1];
             int cnt = dfs(a, b, map);
-            
             min = Math.min(min, Math.abs(cnt - (n - cnt)));
         }
         
