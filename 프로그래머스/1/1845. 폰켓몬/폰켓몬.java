@@ -3,28 +3,24 @@ import java.io.*;
 
 class Solution {
     public int solution(int[] nums) {
-        
-        if(nums.length == 0){
-            return 0;
-        }
-        
         int answer = 0;
-        int len = nums.length;
-        Map<Integer, Integer> map = new HashMap<>();
         
-        for(int i : nums){
-            map.put(i, map.getOrDefault(i, 0) + 1);
+        // 폰켓몬 배열 순서 + type
+        // N/2마리를 가져도 된다 
+        
+        Set<Integer> set = new HashSet<>();
+        
+        for (int i = 0; i < nums.length; i++) {
+            set.add(nums[i]);
         }
         
+        if (set.size() > 0) {
+            answer = set.size();
+        }
         
-        int sum = 0;
-        System.out.println(len/2);
-        for(int i : map.keySet()){
-            answer++;
-            if(answer == len/2){
-                break;
-            }
-        }        
+        if (answer > nums.length / 2) {
+            answer = nums.length / 2;
+        }
         
         return answer;
     }
