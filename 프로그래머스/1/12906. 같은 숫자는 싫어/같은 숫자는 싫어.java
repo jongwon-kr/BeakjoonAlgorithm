@@ -4,22 +4,21 @@ import java.io.*;
 public class Solution {
     public int[] solution(int[] arr) {
         
-        List<Integer> list = new ArrayList<>();
+        Stack<Integer> s = new Stack<>();
         
-        int temp = arr[0];
-        list.add(temp);
-        for (int i = 1; i < arr.length; i++) {
-            if (arr[i] == temp) {
-                continue;
+        for (int i : arr) {
+            if (!s.isEmpty()) {
+                if (i != s.peek()) {
+                    s.push(i);
+                }
             } else {
-                temp = arr[i];
-                list.add(arr[i]);
+                s.push(i);
             }
         }
-    
-        int[] result = new int[list.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = list.get(i);
+        
+        int[] result = new int[s.size()];
+        for (int i = s.size() - 1; i >= 0; i--) {
+            result[i] = s.pop();
         }
         
         return result;
