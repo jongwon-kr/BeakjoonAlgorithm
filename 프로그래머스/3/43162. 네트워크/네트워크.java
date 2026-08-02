@@ -1,44 +1,27 @@
-import java.util.*;
-
 class Solution {
+    boolean[] visited;
+    
     public int solution(int n, int[][] computers) {
-        List<ArrayList<Integer>> netList = new ArrayList<>();
-        boolean[] visited = new boolean[n];
-
-        for(int i = 0; i < n; i++) {
-            netList.add(new ArrayList<>());
-            int[] c = computers[i];
-            for(int j = 0; j < c.length; j++){
-                if(i != j && c[j] == 1){
-                    netList.get(i).add(j);
-                }
+        int answer = 0;
+        visited = new boolean[n];
+        
+        for (int i = 0; i < n; i++) {
+            if (visited[i] == false) {
+                answer++;       
+                dfs(i, computers, n); 
             }
         }
-
-        Queue<Integer> q = new LinkedList<>();
-        int cnt = 0;
-
-        for(int i = 0; i < n; i++) {
-
-            if(visited[i]){
-                continue;
-            } else {
-                q.add(i);
-                cnt++;
-            }
-
-            while(!q.isEmpty()){
-                int c = q.poll();
-                visited[c] = true;
-
-                for(int k : netList.get(c)){
-                    if(!visited[k]){
-                        q.add(k);
-                    }
-                }
+        
+        return answer;
+    }
+    
+    private void dfs(int node, int[][] computers, int n) {
+        visited[node] = true;
+        
+        for (int i = 0; i < n; i++) {
+            if (computers[node][i] == 1 && !visited[i]) {
+                dfs( i, computers, n);
             }
         }
-
-        return cnt;
     }
 }
