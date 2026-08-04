@@ -3,25 +3,27 @@ import java.io.*;
 
 class Solution {
 
-    int cnt = 0;
+    static int cnt;
 
     public int solution(int[] numbers, int target) {
+
         cnt = 0;
-        dfs(numbers, target, 0, 0);
+
+        dfs(0, 0, target, numbers);
+
         return cnt;
     }
 
-    private void dfs(int[] numbers, int target, int depth, int sum) {
+    private void dfs(int n, int sum, int target, int[] numbers) {
 
-        if (depth == numbers.length) {
+        if (n == numbers.length) {
             if (sum == target) {
                 cnt++;
             }
             return;
         }
 
-        dfs(numbers, target, depth + 1, sum + numbers[depth]);
-        dfs(numbers, target, depth + 1, sum - numbers[depth]);
+        dfs(n + 1, sum + numbers[n], target, numbers);
+        dfs(n + 1, sum - numbers[n], target, numbers);
     }
-
 }
