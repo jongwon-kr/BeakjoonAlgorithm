@@ -1,31 +1,35 @@
 import java.util.*;
+import java.io.*;
 
 class Solution {
-    
-    int max = -1;
-    
+    static int maxCnt;
     public int solution(int k, int[][] dungeons) {
-        boolean[] visited = new boolean[dungeons.length];
-        
-        dfs(k, dungeons, visited, 0);
-        
-        return max;
+
+        Arrays.sort(dungeons, (o1, o2) -> {
+            return o2[0] - o1[0];
+        });
+        boolean[] vis = new boolean[dungeons.length];
+        maxCnt = Integer.MIN_VALUE;
+        bt(0, k, 0, dungeons, vis);
+        return maxCnt;
     }
-    
-    public void dfs(int k, int[][] dungeons, boolean[] visited, int cnt){
-        
-        if(cnt > dungeons.length){
+
+    private void bt(int cur, int k, int depth, int[][] dungeons, boolean[] vis) {
+
+        // 조건 최소피로도가 안되면 continue
+        if (depth > dungeons.length) {
             return;
         }
-        
-        for(int i = 0; i < dungeons.length; i++){
-            if(k >= dungeons[i][0] && !visited[i]){
-                visited[i] = true;
-                dfs(k - dungeons[i][1], dungeons, visited, cnt + 1);
-                visited[i] = false;
-            }
+
+        for (int i = 0; i < dungeons.length; i++) {
+
+            if (k < dungeons[i][0] || vis[i]) continue;
+            vis[i] = true;
+
+            bt(i, k - dungeons[i][1], depth + 1, dungeons, vis);
+
+            vis[i] = false;
         }
-        
-        max = Math.max(max, cnt);
+        maxCnt = Math.max(maxCnt, depth);
     }
 }
