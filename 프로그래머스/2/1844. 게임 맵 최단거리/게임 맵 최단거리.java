@@ -1,49 +1,50 @@
 import java.util.*;
-import java.io.*;
-
 
 class Solution {
 
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
+    static int[] dx = {1, -1, 0, 0};
+    static int[] dy = {0, 0, 1, -1};
+    static boolean[][] visited;
+    static int n, m;
 
     public int solution(int[][] maps) {
+        n = maps.length;
+        m = maps[0].length;
+        visited = new boolean[n][m];
 
-        // 최단거리 BFS로 풀어야 함
-        // 벽이 존재하고 반환 값은 최단거리이거나 도달하지 못하면 -1 반환
-        // 시작지점 1,1 상대 진영 n,m
-        ArrayDeque<int[]> q = new ArrayDeque<>();
-        int n = maps.length;
-        int m = maps[0].length;
-        int[][] dist = new int[n][m]; // 방문여부 or 거리 기록
+        bfs(0, 0, maps);
 
-        for (int[] arr : dist) {
-            Arrays.fill(arr, -1);
+        if (maps[n-1][m-1] <= 1) {
+            return -1;
         }
 
-        dist[0][0] = 0;
-        q.offer(new int[]{0, 0});
+        return maps[n-1][m-1];
+    }
 
-        while (!q.isEmpty()) {
+    public void bfs(int x, int y, int[][] maps) {
+        ArrayDeque<int []> adq = new ArrayDeque<>();
 
-            int[] cur = q.poll();
-            int x = cur[0], y = cur[1];
-            int distance = dist[x][y] + 1;
+        adq.offer(new int[]{x, y});
+        visited[x][y] = true;
 
-            if (x == n - 1 && y == m - 1) {
-                return distance;
-            }
+
+        while (!adq.isEmpty()) {
+            int[] cur = adq.poll();
+            int cx = cur[0];
+            int cy = cur[1];
+            int distance = maps[cx][cy] + 1;
 
             for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i], ny = y + dy[i];
+                int nx = cx + dx[i];
+                int ny = cy + dy[i];
 
                 if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-                if (maps[nx][ny] == 0 || dist[nx][ny] > -1) continue;
+                if (visited[nx][ny] || maps[nx][ny] == 0) continue;
 
-                dist[nx][ny] = distance;
-                q.offer(new int[]{nx, ny});
+                visited[nx][ny] = true;
+                maps[nx][ny] = distance;
+                adq.offer(new int[]{nx, ny});
             }
         }
-        return -1;
     }
 }
