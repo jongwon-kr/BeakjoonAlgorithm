@@ -8,25 +8,13 @@ class Solution {
     static int n, m;
 
     public int solution(int[][] maps) {
+        ArrayDeque<int []> adq = new ArrayDeque<>();
         n = maps.length;
         m = maps[0].length;
         visited = new boolean[n][m];
 
-        bfs(0, 0, maps);
-
-        if (maps[n-1][m-1] <= 1) {
-            return -1;
-        }
-
-        return maps[n-1][m-1];
-    }
-
-    public void bfs(int x, int y, int[][] maps) {
-        ArrayDeque<int []> adq = new ArrayDeque<>();
-
-        adq.offer(new int[]{x, y});
-        visited[x][y] = true;
-
+        adq.offer(new int[]{0, 0});
+        visited[0][0] = true;
 
         while (!adq.isEmpty()) {
             int[] cur = adq.poll();
@@ -46,5 +34,11 @@ class Solution {
                 adq.offer(new int[]{nx, ny});
             }
         }
+        
+        if (maps[n-1][m-1] <= 1) {
+            return -1;
+        }
+
+        return maps[n-1][m-1];
     }
 }
